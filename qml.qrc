@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/InitWindow.qml</file>
+        <file>qml/ProgressView.qml</file>
+    </qresource>
+</RCC>
