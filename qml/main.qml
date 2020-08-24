@@ -3,15 +3,18 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.12
 
 ApplicationWindow {
+    id: root
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
+    property bool enabled: false
     Connections{
         target: xo_proxy
         function onStartNotify()
         {
             progress_view.changeText("Начало игры")
+            root.enabled = true
         }
         function onEndNotify(winner_name)
         {
@@ -22,6 +25,7 @@ ApplicationWindow {
                 progress_view.changeText("Конец игры. Победитель " + winner_name)
             }
             refresh_timer.start()
+            root.enabled = false
         }
         function onPlayerChanged(player_name)
         {
@@ -88,11 +92,13 @@ ApplicationWindow {
                     anchors.fill: parent
                     text: model.state
                     fontSizeMode: Text.Fit
+                    font.pointSize: 48
                 }
                 MouseArea{
                     id: field_mouse
                     anchors.fill: parent
                     acceptedButtons: Qt.LeftButton
+                    enabled: root.enabled
                     onClicked: {
                         if (xo_proxy.clickRequest(index) === true){
                             print("success input")
